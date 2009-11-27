@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xb:config xmlns:xb="http://xml.apache.org/xmlbeans/2004/02/xbean/config">
+    <xb:namespace uri="http://www.w3.org/2000/09/xmldsig#">
+        <xb:package>cl.sii.siiDte.dsig</xb:package>
+    </xb:namespace>
+</xb:config>

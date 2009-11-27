@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+	<!--
+		Esquema para Semilla de Autentificación con Certificado. Generado por
+		Tomas Barros, 21 Feb. 2008 No se encontro en la documentacion
+		entregada por SII
+	-->
+<xs:schema targetNamespace="http://www.sii.cl/SiiDte"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:SiiDte="http://www.sii.cl/SiiDte"
+	elementFormDefault="qualified" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	attributeFormDefault="unqualified">
+
+	<xs:element name="RECEPCIONDTE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RUTSENDER" type="xs:string"></xs:element>
+				<xs:element name="RUTCOMPANY" type="xs:string"></xs:element>
+				<xs:element name="FILE" type="xs:string"></xs:element>
+				<xs:element name="TIMESTAMP" type="xs:dateTime"></xs:element>
+				<xs:element name="STATUS" type="xs:int"></xs:element>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="TRACKID" type="xs:int"></xs:element>
+					<xs:element name="DETAIL" >
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ERROR"
+									type="xs:string" minOccurs="0" maxOccurs="unbounded">
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType></xs:element>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

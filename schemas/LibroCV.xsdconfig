@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xb:config xmlns:xb="http://xml.apache.org/xmlbeans/2004/02/xbean/config">
+    <xb:namespace uri="http://www.sii.cl/SiiDte">
+        <xb:package>cl.sii.siiDte.libroCV</xb:package>
+    </xb:namespace>
+          <xb:extension for="cl.sii.siiDte.libroCV.LibroCompraVentaDocument"> 
+    <xb:interface name="cl.nic.dte.extension.LibroCompraVentaDocumentExtension">
+      <xb:staticHandler>
+      cl.nic.dte.extension.LibroCompraVentaDocumentExtensionHandler
+      </xb:staticHandler>
+    </xb:interface>
+  </xb:extension>  
+  </xb:config>

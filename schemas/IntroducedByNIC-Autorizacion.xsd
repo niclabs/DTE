@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--Esquema para Autorizaciones (CAF).
+	Generado por Tomas Barros, 7 Feb. 2007 
+	No se encontro en la documentacion entregada por SII
+-->
+<xs:schema targetNamespace="http://www.sii.cl/SiiDte"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:SiiDte="http://www.sii.cl/SiiDte" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+
+	<xs:include schemaLocation="SiiTypes_v10.xsd" />
+
+
+	<xs:element name="AUTORIZACION" type="SiiDte:AutorizacionType">
+		<xs:annotation>
+			<xs:documentation>
+				Autorizacion recibida por los contribuyentes
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:complexType name="AutorizacionType">
+		<xs:sequence>
+			<xs:element name="CAF" type="SiiDte:CAFType">
+				<xs:annotation>
+					<xs:documentation>
+						Codigo Autorizacion Folios
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RSASK" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						LLave privada en PEM format
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RSAPUBK" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						LLave public en PEM format
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CAFType">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo Autorizacion Folios
+			</xs:documentation>
+		</xs:annotation>
+
+		<xs:sequence>
+			<xs:element name="DA">
+				<xs:annotation>
+					<xs:documentation>
+						Datos de Autorizacion de Folios
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RE" type="SiiDte:RUTType">
+							<xs:annotation>
+								<xs:documentation>
+									RUT Emisor
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="RS">
+							<xs:annotation>
+								<xs:documentation>
+									Razon Social Emisor
+								</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1" />
+									<xs:maxLength value="40" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="TD" type="SiiDte:DTEType">
+							<xs:annotation>
+								<xs:documentation>
+									Tipo DTE
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="RNG">
+							<xs:annotation>
+								<xs:documentation>
+									Rango Autorizado de Folios
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="D"
+										type="SiiDte:FolioType">
+										<xs:annotation>
+											<xs:documentation>
+												Folio Inicial (Desde)
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="H"
+										type="SiiDte:FolioType">
+										<xs:annotation>
+											<xs:documentation>
+												Folio Final (Hasta)
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="FA" type="xs:date">
+							<xs:annotation>
+								<xs:documentation>
+									Fecha Autorizacion en Formato
+									AAAA-MM-DD
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:choice>
+							<xs:element name="RSAPK">
+								<xs:annotation>
+									<xs:documentation>
+										Clave Publica RSA del
+										Solicitante
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="M"
+											type="xs:base64Binary">
+											<xs:annotation>
+												<xs:documentation>
+													Modulo RSA
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="E"
+											type="xs:base64Binary">
+											<xs:annotation>
+												<xs:documentation>
+													Exponente RSA
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DSAPK">
+								<xs:annotation>
+									<xs:documentation>
+										Clave Publica DSA del
+										Solicitante
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="P"
+											type="xs:base64Binary">
+											<xs:annotation>
+												<xs:documentation>
+													Modulo Primo
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Q"
+											type="xs:base64Binary">
+											<xs:annotation>
+												<xs:documentation>
+													Entero Divisor de P
+													- 1
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="G"
+											type="xs:base64Binary">
+											<xs:annotation>
+												<xs:documentation>
+													Entero f(P, Q)
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Y"
+											type="xs:base64Binary">
+											<xs:annotation>
+												<xs:documentation>
+													G**X mod P
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+						<xs:element name="IDK" type="xs:long">
+							<xs:annotation>
+								<xs:documentation>
+									Identificador de Llave
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FRMA">
+				<xs:annotation>
+					<xs:documentation>
+						Firma Digital (RSA) del SII Sobre DA
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:base64Binary">
+							<xs:attribute name="algoritmo"
+								type="xs:string" use="required" fixed="SHA1withRSA" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" use="required" fixed="1.0" />
+
+
+	</xs:complexType>
+
+	<xs:complexType name="TEDType">
+		<xs:sequence>
+
+			<xs:element name="DD">
+				<xs:annotation>
+					<xs:documentation>
+						Datos Basicos de Documento
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RE" type="SiiDte:RUTType">
+							<xs:annotation>
+								<xs:documentation>
+									RUT Emisor
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="TD" type="SiiDte:DTEType">
+							<xs:annotation>
+								<xs:documentation>
+									Tipo DTE
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="F" type="SiiDte:FolioType">
+							<xs:annotation>
+								<xs:documentation>
+									Folio DTE
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="FE" type="xs:date">
+							<xs:annotation>
+								<xs:documentation>
+									Fecha Emision DTE en Formato
+									AAAA-MM-DD
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="RR" type="SiiDte:RUTType">
+							<xs:annotation>
+								<xs:documentation>
+									RUT Receptor
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="RSR">
+							<xs:annotation>
+								<xs:documentation>
+									Razon Social Receptor
+								</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1" />
+									<xs:maxLength value="40" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="MNT" type="xs:unsignedLong">
+							<xs:annotation>
+								<xs:documentation>
+									Monto Total DTE
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="IT1">
+							<xs:annotation>
+								<xs:documentation>
+									Descripcion Primer Item de Detalle
+								</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1" />
+									<xs:maxLength value="40" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="CAF" type="SiiDte:CAFType">
+							<xs:annotation>
+								<xs:documentation>
+									Codigo Autorizacion Folios
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="TSTED" type="xs:dateTime">
+							<xs:annotation>
+								<xs:documentation>
+									TimeStamp de Generacion del Timbre
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FRMT">
+				<xs:annotation>
+					<xs:documentation>
+						Valor de Firma Digital sobre DD
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:base64Binary">
+							<xs:attribute name="algoritmo"
+								use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration
+											value="SHA1withRSA" />
+										<xs:enumeration
+											value="SHA1withDSA" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" use="required" fixed="1.0" />
+	</xs:complexType>
+
+
+</xs:schema>

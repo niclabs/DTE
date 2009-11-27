@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xb:config xmlns:xb="http://xml.apache.org/xmlbeans/2004/02/xbean/config">
+     <xb:extension for="cl.sii.siiDte.boletas.BOLETADefType">
+	    <xb:interface name="cl.nic.dte.extension.BOLETADefTypeExtension">
+      <xb:staticHandler>
+      cl.nic.dte.extension.BOLETADefTypeExtensionHandler
+      </xb:staticHandler>
+    </xb:interface>
+  </xb:extension>  
+       <xb:extension for="cl.sii.siiDte.boletas.EnvioBOLETADocument">
+	    <xb:interface name="cl.nic.dte.extension.EnvioBOLETADocumentExtension">
+      <xb:staticHandler>
+      cl.nic.dte.extension.EnvioBOLETADocumentExtensionHandler
+      </xb:staticHandler>
+    </xb:interface>
+  </xb:extension>  
+  </xb:config>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+	<!--
+		Esquema para Semilla de Autentificación con Certificado. Generado por
+		Tomas Barros, 21 Feb. 2008 No se encontro en la documentacion
+		entregada por SII
+	-->
+<xs:schema targetNamespace="http://www.sii.cl/XMLSchema"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:SiiDte="http://www.sii.cl/XMLSchema"
+	elementFormDefault="qualified" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	attributeFormDefault="unqualified">
+
+	<xs:element name="RESPUESTA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RESP_BODY">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="TOKEN" type="xs:string">
+							</xs:element>
+							<xs:element name="SEMILLA" type="xs:string">
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="RESP_HDR">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ESTADO" type="xs:int">
+							</xs:element>
+							<xs:choice>
+								<xs:element name="GLOSA" type="xs:string" minOccurs="0">
+								</xs:element>
+								<xs:sequence>
+									<xs:element name="GLOSA_ESTADO" type="xs:string">
+									</xs:element>
+									<xs:element name="ERR_CODE" type="xs:int">
+									</xs:element>
+									<xs:element name="NUM_ATENCION" type="xs:string">
+									</xs:element>
+								</xs:sequence>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

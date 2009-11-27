@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xb:config xmlns:xb="http://xml.apache.org/xmlbeans/2004/02/xbean/config">
+    <xb:extension for="cl.sii.siiDte.CAFType">
+    <xb:interface name="cl.nic.dte.extension.CAFTypeExtension">
+      <xb:staticHandler>
+      cl.nic.dte.extension.CAFTypeExtensionHandler
+      </xb:staticHandler>
+    </xb:interface>
+  </xb:extension>  
+  <xb:extension for="cl.sii.siiDte.AutorizacionType">
+    <xb:interface name="cl.nic.dte.extension.AutorizacionTypeExtension">
+      <xb:staticHandler>
+      cl.nic.dte.extension.AutorizacionTypeExtensionHandler
+      </xb:staticHandler>
+    </xb:interface>
+  </xb:extension>  
+
+</xb:config>

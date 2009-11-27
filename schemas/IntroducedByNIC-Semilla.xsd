@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+	<!--
+		Esquema para Semilla de Autentificación con Certificado. Generado por
+		Tomas Barros, 21 Feb. 2008 No se encontro en la documentacion
+		entregada por SII
+	-->
+<xs:schema targetNamespace="http://www.sii.cl/SiiDte"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:SiiDte="http://www.sii.cl/SiiDte"
+	elementFormDefault="qualified" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	attributeFormDefault="unqualified">
+
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+		schemaLocation="xmldsignature_v10.xsd" />
+
+	<xs:element name="getToken">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="item">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Semilla" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="ds:Signature" />
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:decimal" use="required"
+				fixed="1.0" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
