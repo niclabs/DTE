@@ -1,0 +1,485 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     Sep 21, 2005 2:21:31 PM                                                    
+    
+
+     project    
+     description
+                   
+     bbarros                                                                
+     ====================================================================== -->
+<project name="project" default="compile">
+	<description>
+            description
+    </description>
+
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="generated.dir" value="${build.dir}/generated" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="schemas.dir" value="${basedir}/schemas" />
+	<property name="jar.file" value="${build.dir}/OpenLibsDte.jar" />
+	<property name="debug.list" value="lines,vars,source" />
+
+	<taskdef name="xmlbean" classname="org.apache.xmlbeans.impl.tool.XMLBean">
+		<classpath>
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</classpath>
+	</taskdef>
+
+	<!-- ================================= 
+          target: xmlbuild              
+         ================================= -->
+
+	<target name="javadoc">
+		<description>
+			Genera la documentación de la API
+				</description>
+		<javadoc destdir="docs/api" author="true" version="true" use="true" windowtitle="Biblioteca de DTEs" packagenames="cl.*" defaultexcludes="yes">
+			<classpath>
+				<pathelement path="${classes.dir}" />
+				<fileset dir="${lib.dir}">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${generated.dir}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+
+			<fileset dir="${src.dir}">
+				<exclude name="**/*.properties" />
+			</fileset>
+
+			<doctitle>
+				<![CDATA[<h1>Bibliotecas DTEs</h1>]]></doctitle>
+		<bottom>
+			<![CDATA[<p>
+
+			<p>Copyright [2009] [NIC Labs]</p> 
+			
+			Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file 
+			except in compliance with the License. You may obtain a copy of the 
+			License at<p>
+
+				<p>http://www.apache.org/licenses/LICENSE-2.0</p>
+			
+			Unless required by applicable law or 
+			agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, 
+			WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the 
+			specific language governing permissions and limitations under the License.</p>
+			]]>
+		</bottom>
+		<tag name="cl.nic.dte.todo" scope="all" description="To do:" />
+		<link href="http://java.sun.com/javase/6/docs/api/" />
+	</javadoc>
+</target>
+
+<target name="prepare">
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="IntroducedByNIC-Autorizacion.xsd" />
+			<include name="IntroducedByNIC-Semilla.xsd" />
+			<include name="SiiTypes_v10.xsd" />
+			<include name="DTE_v10.xsd" />
+			<include name="EnvioDTE_v10.xsd" />
+			<include name="xmldsignature_v10.xsd" />
+			<include name="RespSII_v10.xsd" />
+			<include name="RespuestaEnvioDTE_v10.xsd" />
+			<include name="IntroducedByNIC-TedBarCode.xsd" />
+			<include name="NICbase.xsdconfig" />
+		</fileset>
+	</xmlbean>
+
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="ConsumoFolio_v10.xsd" />
+			<include name="NICbase.xsdconfig" />
+			<include name="prepare-ConsumoFolio.xsdconfig" />
+		</fileset>
+	</xmlbean>
+
+	<javac destdir="${classes.dir}" srcdir="${src.dir}/cl/nic/dte" fork="yes" debug="on" debuglevel="${debug.list}">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<include name="extension/AutorizacionTypeExtension.java" />
+		<include name="extension/AutorizacionTypeExtensionHandler.java" />
+		<include name="extension/CAFTypeExtension.java" />
+		<include name="extension/CAFTypeExtensionHandler.java" />
+		<include name="util/Utilities.java" />
+		<include name="VerifyResult.java" />
+	</javac>
+
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="IntroducedByNIC-Autorizacion.xsd" />
+			<include name="NICbase.xsdconfig" />
+			<include name="IntroducedByNIC-Autorizacion.xsdconfig" />
+		</fileset>
+	</xmlbean>
+
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="EnvioBOLETA_v11.xsd" />
+			<include name="NICbase.xsdconfig" />
+			<include name="prepare-BOLETA.xsdconfig" />
+		</fileset>
+	</xmlbean>
+
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="LceCal_v10.xsd" />
+			<include name="LceCoCertif_v10" />
+			<include name="LceSiiTypes_v10.xsd" />
+			<include name="LibroCV_v10.xsd" />
+			<include name="NICbase.xsdconfig" />
+			<include name="prepare-LibroCV.xsdconfig" />
+		</fileset>
+	</xmlbean>
+
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="LibroBOLETA_v10.xsd" />
+			<include name="NICbase.xsdconfig" />
+			<include name="prepare-LibroBOLETA.xsdconfig" />
+		</fileset>
+	</xmlbean>
+
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="LibroGuia_v10.xsd" />
+			<include name="NICbase.xsdconfig" />
+			<include name="prepare-LibroGuia.xsdconfig" />
+		</fileset>
+	</xmlbean>
+
+	<javac destdir="${classes.dir}" srcdir="${src.dir}/cl/nic/dte" fork="yes" debug="on" debuglevel="${debug.list}">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<include name="util/Utilities.java" />
+		<include name="util/XMLUtil.java" />
+		<include name="VerifyResult.java" />
+		<include name="TimbreException.java" />
+		<include name="extension/DTESignatureExtension.java" />
+		<include name="extension/DTEXMLExtension.java" />
+		<include name="extension/AutorizacionTypeExtension.java" />
+		<include name="extension/AutorizacionTypeExtensionHandler.java" />
+		<include name="extension/CAFTypeExtension.java" />
+		<include name="extension/CAFTypeExtensionHandler.java" />
+	</javac>
+</target>
+
+<target name="xmlbuild-boletas" depends="prepare">
+	<javac destdir="${classes.dir}" srcdir="${src.dir}/cl/nic/dte" fork="yes" debug="on" debuglevel="${debug.list}">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<include name="extension/BOLETADefTypeExtension.java" />
+		<include name="extension/BOLETADefTypeExtensionHandler.java" />
+		<include name="extension/EnvioBOLETADocumentExtension.java" />
+		<include name="extension/EnvioBOLETADocumentExtensionHandler.java" />
+	</javac>
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="EnvioBOLETA_v11.xsd" />
+			<include name="NICbase.xsdconfig" />
+			<include name="prepare-BOLETA.xsdconfig" />
+			<include name="EnvioBOLETA_v11.xsdconfig" />
+		</fileset>
+	</xmlbean>
+</target>
+
+
+<target name="xmlbuild-libro-boletas" depends="prepare">
+	<javac destdir="${classes.dir}" srcdir="${src.dir}/cl/nic/dte" fork="yes" debug="on" debuglevel="${debug.list}">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<include name="extension/LibroBoletaDocumentExtension.java" />
+		<include name="extension/LibroBoletaDocumentExtensionHandler.java" />
+	</javac>
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="LibroBOLETA_v10.xsd" />
+
+			<include name="NICbase.xsdconfig" />
+			<include name="prepare-LibroBOLETA.xsdconfig" />
+			<include name="LibroBOLETA.xsdconfig" />
+		</fileset>
+	</xmlbean>
+</target>
+
+<target name="xmlbuild-libro-guia" depends="prepare">
+	<javac destdir="${classes.dir}" srcdir="${src.dir}/cl/nic/dte" fork="yes" debug="on" debuglevel="${debug.list}">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<include name="extension/LibroGuiaDocumentExtension.java" />
+		<include name="extension/LibroGuiaDocumentExtensionHandler.java" />
+	</javac>
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="LibroGuia_v10.xsd" />
+			<include name="NICbase.xsdconfig" />
+			<include name="LibroGuia.xsdconfig" />
+		</fileset>
+	</xmlbean>
+</target>
+
+<target name="xmlbuild-consumo-folios" depends="prepare">
+	<javac destdir="${classes.dir}" srcdir="${src.dir}/cl/nic/dte" fork="yes" debug="on" debuglevel="${debug.list}">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<include name="extension/ConsumoFoliosDocumentExtension.java" />
+		<include name="extension/ConsumoFoliosDocumentExtensionHandler.java" />
+	</javac>
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="ConsumoFolio_v10.xsd" />
+
+			<include name="NICbase.xsdconfig" />
+			<include name="ConsumoFolio_v10.xsdconfig" />
+		</fileset>
+	</xmlbean>
+</target>
+
+
+
+<target name="xmlbuild-libro-CV" depends="prepare">
+	<javac destdir="${classes.dir}" srcdir="${src.dir}/cl/nic/dte" fork="yes" debug="on" debuglevel="${debug.list}">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<include name="extension/LibroCompraVentaDocumentExtension.java" />
+		<include name="extension/LibroCompraVentaDocumentExtensionHandler.java" />
+	</javac>
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="LibroCV_v10.xsd" />
+
+			<include name="NICbase.xsdconfig" />
+			<include name="prepare-LibroCV.xsdconfig" />
+			<include name="LibroCV.xsdconfig" />
+		</fileset>
+	</xmlbean>
+</target>
+<target name="xmlbuild" depends="prepare">
+	<javac destdir="${classes.dir}" srcdir="${src.dir}/cl/nic/dte" fork="yes" debug="on" debuglevel="${debug.list}">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<include name="extension/DTEDefTypeExtension.java" />
+		<include name="extension/DTEDefTypeExtensionHandler.java" />
+		<include name="extension/DTESignatureExtension.java" />
+		<include name="extension/DTEXMLExtension.java" />
+		<include name="extension/EnvioDTEDocumentExtension.java" />
+		<include name="extension/EnvioDTEDocumentExtensionHandler.java" />
+		<include name="extension/EnvioBOLETADocumentExtension.java" />
+		<include name="extension/EnvioBOLETADocumentExtensionHandler.java" />
+		<include name="extension/RespuestaDTEDocumentExtension.java" />
+		<include name="extension/RespuestaDTEDocumentExtensionHandler.java" />
+		<include name="extension/RESULTADOENVIOExtensionHandler.java" />
+		<include name="extension/GetTokenDocumentExtension.java" />
+		<include name="extension/GetTokenDocumentExtensionHandler.java" />
+	</javac>
+	<xmlbean classgendir="${classes.dir}" srcgendir="${generated.dir}" fork="yes">
+		<classpath>
+			<pathelement location="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<fileset dir="${schemas.dir}">
+			<include name="DTE_v10.xsd" />
+			<include name="EnvioDTE_v10.xsd" />
+			<include name="RespSII_v10.xsd" />
+			<include name="RespuestaEnvioDTE_v10.xsd" />
+			<include name="IntroducedByNIC-Semilla.xsd" />
+			<include name="IntroducedByNIC-SemillaRequest.xsd" />
+			<include name="IntroducedByNIC-RecepcionDTE.xsd" />
+
+			<include name="NICbase.xsdconfig" />
+			<include name="DTE_v10.xsdconfig" />
+			<include name="EnvioDTE_v10.xsdconfig" />
+			<include name="RespSII_v10.xsdconfig" />
+			<include name="RespuestaEnvioDTE.xsdconfig" />
+			<include name="IntroducedByNIC-Semilla.xsdconfig" />
+		</fileset>
+	</xmlbean>
+</target>
+
+
+<target name="compile" depends="xmlbuild,xmlbuild-boletas,xmlbuild-libro-boletas,xmlbuild-libro-CV,xmlbuild-consumo-folios,xmlbuild-libro-guia">
+	<javac destdir="${classes.dir}" debug="on" debuglevel="${debug.list}">
+		<classpath>
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</classpath>
+		<src path="${generated.dir}" />
+		<src path="${src.dir}" />
+	</javac>
+	<copy todir="${classes.dir}/cl/nic/dte/resources">
+		<fileset dir="${src.dir}/cl/nic/dte/resources" />
+	</copy>
+</target>
+
+<target name="dist" depends="compile">
+	<jar destfile="${jar.file}">
+		<manifest>
+			<attribute name="Built-By" value="${user.name}" />
+
+			<section name="common">
+				<attribute name="Implementation-Title" value="OpenLibsDTE" />
+				<attribute name="Implementation-Version" value="${version} ${TODAY}" />
+				<attribute name="Implementation-Vendor" value="NIC Labs" />
+
+			</section>
+		</manifest>
+		<fileset dir="${classes.dir}" />
+		<fileset dir="${src.dir}" />
+	</jar>
+</target>
+
+<target name="check-jar">
+	<available file="${jar.file}" type="file" property="jar.present" />
+</target>
+
+<target name="needcompile" unless="jar.present" depends="check-jar">
+	<echo>Debe generar primero el archivo jar, ejecute "ant dist"</echo>
+	<fail message="Ejecución cancelada" />
+</target>
+
+<target name="run" depends="needcompile">
+
+
+	<input message="Ingrese el número de folio: " addproperty="folio">
+	</input>
+	<java classname="cl.nic.dte.RealExample" fork="true">
+		<classpath>
+			<pathelement path="${classes.dir}" />
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+			<pathelement path="${jar.file}" />
+		</classpath>
+		<arg value="${folio}" />
+	</java>
+</target>
+
+
+<target name="clean">
+	<delete dir="${generated.dir}" />
+	<delete dir="${classes.dir}" />
+</target>
+
+<target name="init">
+	<!-- Create the build directory structure used by compile -->
+	<mkdir dir="${build.dir}" />
+	<mkdir dir="${generated.dir}" />
+</target>
+
+
+</project>

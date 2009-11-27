@@ -1,0 +1,1 @@
+- Para regenerar a partir del esquema, se debe renombrar el prefijo xmldsig a dsig en el schema xmldsignature_v10.xsd
