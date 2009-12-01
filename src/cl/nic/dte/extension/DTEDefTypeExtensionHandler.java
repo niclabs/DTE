@@ -584,9 +584,9 @@ public class DTEDefTypeExtensionHandler {
 
 		sig.initSign(pKey);
 
-		//sig.update(XMLUtil.getCleaned(data));
+		sig.update(XMLUtil.getCleaned(data));
 		
-		sig.update(XMLUtil.getBytesXML(data));
+		// sig.update(XMLUtil.getBytesXML(data));
 		
 		DTEDefType.Documento.TED.FRMT frmt = ted.addNewFRMT();
 		frmt.setAlgoritmo(siiAlg);

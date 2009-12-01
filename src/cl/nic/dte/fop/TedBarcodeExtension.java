@@ -16,6 +16,7 @@
 
 package cl.nic.dte.fop;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 import org.apache.xmlbeans.XmlException;
@@ -42,7 +43,14 @@ public class TedBarcodeExtension extends BarcodeExt {
 		
 		try {
 			ted = TEDType.Factory.parse(tedxml.item(0),opts);
-			String msg = new String(XMLUtil.getCleaned(ted));
+			String msg = null;
+			try {
+				msg = new String(XMLUtil.getCleaned(ted),"ISO-8859-1");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(msg);
 			return generate(nl, msg);
 
 		

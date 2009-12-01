@@ -571,13 +571,13 @@ public class XMLUtil {
 			opts.setCharacterEncoding("ISO-8859-1");
 			opts.setSaveImplicitNamespaces(namespaces);
 			opts.setSaveOuter();
-			opts.setSavePrettyPrint();
+			// opts.setSavePrettyPrint();
 			opts.setSavePrettyPrintIndent(0);
 			opts.setSaveNoXmlDecl();
 			xml.save(out, opts);
 
-			return out.toString("ISO-8859-1").replaceAll("\n", "").getBytes(
-					"ISO-8859-1");
+			return out.toString("ISO-8859-1").replaceAll("\n", "").getBytes("ISO-8859-1");
+			// return out.toString("ISO-8859-1").getBytes("ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			// Nunca debe invocarse
 			e.printStackTrace();
@@ -738,5 +738,43 @@ public class XMLUtil {
 
 		caf.getFRMA().setByteArrayValue(Base64.encodeBase64(sig.sign()));
 		return template;
+	}
+
+	/**
+	 * Obtiene una representaci&oacute;n "limpia" de un elemento XML, esto
+	 * quiere decir, sin espacios ni nuevas l&iacute;neas entre tags. Este
+	 * m&eacute;todo se utiliza en la generaci&oacute;n PDF del &lt;TED&gt;.
+	 * 
+	 * @param xml
+	 *            El nodo XML
+	 * @return El arreglo de bytes codificado con ISO-8859-1 (norma exigida por
+	 *         SII) del contenido del nodo (incluyendo los tags y caracteres
+	 *         especiales de XML como &amp;).
+	 */
+	public static byte[] getCleanedII(XmlObject xml) {
+		try {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+	
+			XmlOptions opts = new XmlOptions();
+			HashMap<String, String> namespaces = new HashMap<String, String>();
+			namespaces.put("", "http://www.sii.cl/SiiDte");
+			opts.setCharacterEncoding("ISO-8859-1");
+			opts.setSaveImplicitNamespaces(namespaces);
+			opts.setSaveOuter();
+			//opts.setSavePrettyPrint();
+			//opts.setSavePrettyPrintIndent(0);
+			opts.setSaveNoXmlDecl();
+			xml.save(out, opts);
+	
+			return out.toByteArray();
+		} catch (UnsupportedEncodingException e) {
+			// Nunca debe invocarse
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			// Nunca debe invocarse
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
