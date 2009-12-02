@@ -50,7 +50,6 @@ public class TedBarcodeExtension extends BarcodeExt {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(msg);
 			return generate(nl, msg);
 
 		
