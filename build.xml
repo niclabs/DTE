@@ -1,14 +1,19 @@
 <?xml version="1.0"?>
 <!-- ====================================================================== 
-     Sep 21, 2005 2:21:31 PM                                                    
-    
-
-     project    
-     description
-                   
-     bbarros                                                                
+ Copyright [2009] [NIC Labs]
+ 
+ Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ except in compliance with the License. You may obtain a copy of the 	License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or 
+ agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations under the License.
+ 
      ====================================================================== -->
-<project name="project" default="compile">
+<project name="project" default="dist">
 	<description>
             description
     </description>
@@ -442,33 +447,6 @@
 		<fileset dir="${src.dir}" />
 	</jar>
 </target>
-
-<target name="check-jar">
-	<available file="${jar.file}" type="file" property="jar.present" />
-</target>
-
-<target name="needcompile" unless="jar.present" depends="check-jar">
-	<echo>Debe generar primero el archivo jar, ejecute "ant dist"</echo>
-	<fail message="Ejecución cancelada" />
-</target>
-
-<target name="run" depends="needcompile">
-
-
-	<input message="Ingrese el número de folio: " addproperty="folio">
-	</input>
-	<java classname="cl.nic.dte.RealExample" fork="true">
-		<classpath>
-			<pathelement path="${classes.dir}" />
-			<fileset dir="${lib.dir}">
-				<include name="*.jar" />
-			</fileset>
-			<pathelement path="${jar.file}" />
-		</classpath>
-		<arg value="${folio}" />
-	</java>
-</target>
-
 
 <target name="clean">
 	<delete dir="${generated.dir}" />
