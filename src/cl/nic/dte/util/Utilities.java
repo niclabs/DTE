@@ -268,6 +268,7 @@ public class Utilities {
 	public static String getRutFromCertificate(X509Certificate x509) {
 		String rut = null;
 		Pattern p = Pattern.compile("[\\d]{6,8}-[\\dkK]");
+	
 		Matcher m = p.matcher(new String(x509.getExtensionValue("2.5.29.17")));
 		if (m.find())
 			rut = m.group();
@@ -275,4 +276,5 @@ public class Utilities {
 		return rut;
 
 	}
+	
 }
