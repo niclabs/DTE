@@ -12,7 +12,7 @@
 <MedioPago>LT</MedioPago>
 </IdDoc>
 <Emisor>
-<RUTEmisor>10000000-8</RUTEmisor>
+<RUTEmisor>66666666-6</RUTEmisor>
 <RznSoc>Acme Inc</RznSoc>
 <GiroEmis>Divertimento</GiroEmis>
 <Acteco>61911</Acteco>
@@ -23,7 +23,7 @@
 <CiudadOrigen>Santiago</CiudadOrigen>
 </Emisor>
 <Receptor>
-<RUTRecep>60803000-K</RUTRecep>
+<RUTRecep>55555555-5</RUTRecep>
 <RznSocRecep>Warner Brothers</RznSocRecep>
 <GiroRecep>Divertimento</GiroRecep>
 <Contacto>Pinky y Cerebro</Contacto>
