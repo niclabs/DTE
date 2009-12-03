@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<EnvioDTE version="1.0" xmlns="http://www.sii.cl/SiiDte">
+	<SetDTE>
+		<Caratula version="1.0">
+			<RutEmisor>60910000-1</RutEmisor>
+			<FchResol>2002-10-20</FchResol>
+			<NroResol>0</NroResol>
+		</Caratula>
+	</SetDTE>
+</EnvioDTE>
