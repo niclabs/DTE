@@ -15,8 +15,7 @@
 # ----------------------------------------------------------------------------
 
 # seteando el classpath
-SCRIPT=$(readlink -f $0)
-SCRIPTPATH=`dirname $SCRIPT`
+SCRIPTPATH=`dirname $0`
 . $SCRIPTPATH/env.sh
 
 $JAVACMD cl.nic.dte.examples.VerificaEstadoEnSII $@

@@ -27,8 +27,7 @@ exit 127
 fi
 
 # seteando el classpath
-SCRIPT=$(readlink -f $0)
-SCRIPTPATH=`dirname $SCRIPT`
+SCRIPTPATH=`dirname $0`
 
 for i in $SCRIPTPATH/../lib/*.jar; do
     CLASSPATH=$i:$CLASSPATH
