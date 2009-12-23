@@ -86,7 +86,7 @@ public class EnvioDTEDocumentExtensionHandler {
 		dte.getEnvioDTE().getSetDTE().getCaratula().xsetTmstFirmaEnv(
 				FechaHoraType.Factory.newValue(Utilities.fechaHoraFormat
 						.format(new Date())));
-		XMLUtil.signEmbeded(dte.getEnvioDTE().getDomNode(), uri, pKey, cert);
+		XMLUtil.signEmbededApache(dte.getEnvioDTE().getDomNode().getOwnerDocument(), uri, pKey, cert);
 
 		XmlOptions opts = new XmlOptions();
 		opts.setCharacterEncoding("ISO-8859-1");

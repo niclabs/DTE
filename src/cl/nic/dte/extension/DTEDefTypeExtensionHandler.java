@@ -160,7 +160,7 @@ public class DTEDefTypeExtensionHandler {
 
 		HashMap<String, String> namespaces = new HashMap<String, String>();
 		namespaces.put("", "http://www.sii.cl/SiiDte");
-		XMLUtil.signEmbeded(dte.getDomNode(), uri, pKey, cert);
+		XMLUtil.signEmbededApache(dte.getDomNode().getOwnerDocument(), uri, pKey, cert);
 		XmlOptions opts = new XmlOptions();
 		opts.setCharacterEncoding("ISO-8859-1");
 		opts.setSaveImplicitNamespaces(namespaces);
@@ -591,6 +591,8 @@ public class DTEDefTypeExtensionHandler {
 		DTEDefType.Documento.TED.FRMT frmt = ted.addNewFRMT();
 		frmt.setAlgoritmo(siiAlg);
 		frmt.setByteArrayValue(sig.sign());
+		
+		
 	}
 
 	private static void timbrar(Exportaciones doc,

@@ -95,11 +95,21 @@ public class GeneraFactura {
 		PrivateKey key = (PrivateKey) ks.getKey(alias, passS.toCharArray());
 
 		// Timbro
-
 		doc.getDTE().timbrar(caf.getCAF(), caf.getPrivateKey(null));
+		
+		opts.setSavePrettyPrint();
+		opts.setSavePrettyPrintIndent(0);
+		opts.setCharacterEncoding("ISO-8859-1");
+		opts.setSaveImplicitNamespaces(namespaces);
 
+		// Releo formateado
+		doc = DTEDocument.Factory.parse(doc.newInputStream(opts), opts);
+		
 		// firmo
 		doc.getDTE().sign(key, cert);
+		
+		//(new FileOutputStream(resultS)).write(doc.getDTE().sign(key, cert));
+		
 
 		// Guardo
 		opts = new XmlOptions();

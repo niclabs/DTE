@@ -69,9 +69,14 @@ import javax.xml.crypto.dsig.spec.TransformParameterSpec;
 import javax.xml.transform.TransformerException;
 
 import org.apache.commons.ssl.Base64;
+import org.apache.xml.security.exceptions.XMLSecurityException;
+import org.apache.xml.security.signature.ObjectContainer;
+import org.apache.xml.security.transforms.Transforms;
 import org.apache.xmlbeans.XmlError;
 import org.apache.xmlbeans.XmlObject;
 import org.apache.xmlbeans.XmlOptions;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import cl.nic.dte.VerifyResult;
@@ -777,4 +782,71 @@ public class XMLUtil {
 			return null;
 		}
 	}
+
+	/**
+	 * Firma digitalmente usando la forma "enveloped signature" seg&uacute;n el
+	 * est&aacute;ndar de la W3C (<a
+	 * href="http://www.w3.org/TR/xmldsig-core/">http://www.w3.org/TR/xmldsig-core/</a>).
+	 * <p>
+	 * 
+	 * Este m&eacute;todo adem&aacute;s incorpora la informaci&oacute;n del
+	 * certificado a la secci&oacute;n &lt;KeyInfo&gt; opcional del
+	 * est&aacute;ndar, seg&uacute;n lo exige SII.
+	 * <p>
+	 * 
+	 * @param doc
+	 *            El documento a firmar
+	 * @param uri
+	 *            La referencia dentro del documento que debe ser firmada
+	 * @param pKey
+	 *            La llave privada para firmar
+	 * @param cert
+	 *            El certificado digital correspondiente a la llave privada
+	 * @throws NoSuchAlgorithmException
+	 *             Si el algoritmo de firma de la llave no est&aacute; soportado
+	 *             (Actualmente soportado RSA+SHA1, DSA+SHA1 y HMAC+SHA1).
+	 * @throws InvalidAlgorithmParameterException
+	 *             Si los algoritmos de canonizaci&oacute;n (parte del
+	 *             est&aacute;ndar XML Signature) no son soportados (actaulmente
+	 *             se usa el por defecto)
+	 * @throws KeyException
+	 *             Si hay problemas al incluir la llave p&uacute;blica en el
+	 *             &lt;KeyValue&gt;.
+	 * @throws MarshalException
+	 * @throws XMLSignatureException
+	 * 
+	 * @see javax.xml.crypto.dsig.XMLSignature#sign(javax.xml.crypto.dsig.XMLSignContext)
+	 */
+	public static void signEmbededApache(Document doc, String uri, PrivateKey pKey,
+			X509Certificate cert) throws NoSuchAlgorithmException,
+			InvalidAlgorithmParameterException, KeyException, MarshalException,
+			XMLSignatureException {
+	
+		try {
+			org.apache.xml.security.signature.XMLSignature sig = new org.apache.xml.security.signature.XMLSignature(doc, uri,
+			         org.apache.xml.security.signature.XMLSignature.ALGO_ID_SIGNATURE_RSA);
+			
+			doc.getDocumentElement().appendChild(sig.getElement());
+			
+			//ObjectContainer obj = new ObjectContainer(doc);
+			//obj.setId(uri);
+	         //sig.appendObject(obj);
+	         Transforms transforms = new Transforms(doc);
+	         transforms.addTransform(Transforms.TRANSFORM_ENVELOPED_SIGNATURE);
+			sig.addDocument(uri,transforms);
+	         sig.addKeyInfo(cert.getPublicKey());
+	         sig.addKeyInfo(cert);
+			//	sig.setXPathNamespaceContext("xmlns", "http://www.w3.org/2000/09/xmldsig#");
+	         sig.sign(pKey);
+			
+		} catch (XMLSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+	
+	static {
+	      org.apache.xml.security.Init.init();
+	   }
 }
