@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- 
+Modificación NIC Labs (Jose Urzua), 04 de Enero 2010:
+Comentada la definicion de RUTType y EnteroType, ya están definidos en SiiTypes_v10.xsd
+
+Razon: reclama al momento de construir los objetos 
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="ResultadoEnvioLibro">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Identificacion">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TrackId" type="EnteroType"/>
+							<xs:element name="RutEmisor">
+								<xs:simpleType>
+									<xs:restriction base="RUTType"/>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="RutEnvia">
+								<xs:simpleType>
+									<xs:restriction base="RUTType"/>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="TmstRecepcion" type="xs:dateTime"/>
+							<xs:element name="EstadoEnvio" type="xs:string"/>
+							<xs:element name="TipoSegmento" type="xs:string" minOccurs="0"/>
+							<xs:element name="NroSegmento" type="xs:string" minOccurs="0"/>
+							<xs:element name="TipoLibro" type="xs:string" minOccurs="0"/>
+							<xs:element name="TipoOperacion" type="xs:string" minOccurs="0"/>
+							<xs:element name="PeriodoTributario" type="xs:string" minOccurs="0"/>
+							<xs:element name="EstadoLibro" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ErrorEnvioLibro" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DetErrEnvio" type="xs:string" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element><!--
+	<xs:simpleType name="RUTType">
+		<xs:annotation>
+			<xs:documentation>Rol Unico Tributario (99..99-X)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+			<xs:minLength value="3"/>
+			<xs:pattern value="[0-9]+-([0-9]|K)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EnteroType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:totalDigits value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+--></xs:schema>

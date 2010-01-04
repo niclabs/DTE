@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xb:config xmlns:xb="http://xml.apache.org/xmlbeans/2004/02/xbean/config">
+  <xb:extension for="cl.sii.siiDte.EnvioRecibosDocument"> 
+    <xb:interface name="cl.nic.dte.extension.EnvioRecibosDocumentExtension">
+      <xb:staticHandler>
+      cl.nic.dte.extension.EnvioRecibosDocumentExtensionHandler
+      </xb:staticHandler>
+    </xb:interface>
+  </xb:extension>  
+</xb:config>

@@ -98,6 +98,9 @@
 			<include name="EnvioDTE_v10.xsd" />
 			<include name="xmldsignature_v10.xsd" />
 			<include name="RespSII_v10.xsd" />
+			<include name="RespSIILibros_v10.xsd" />
+			<include name="EnvioRecibos_v10.xsd" />
+			<include name="Recibos_v10.xsd" />
 			<include name="RespuestaEnvioDTE_v10.xsd" />
 			<include name="IntroducedByNIC-TedBarCode.xsd" />
 			<include name="NICbase.xsdconfig" />
@@ -386,6 +389,11 @@
 		<include name="extension/RespuestaDTEDocumentExtension.java" />
 		<include name="extension/RespuestaDTEDocumentExtensionHandler.java" />
 		<include name="extension/RESULTADOENVIOExtensionHandler.java" />
+		<include name="extension/ResultadoEnvioLibroDocumentExtensionHandler.java" />
+		<include name="extension/EnvioRecibosDocumentExtension.java" />
+		<include name="extension/EnvioRecibosDocumentExtensionHandler.java" />
+		<include name="extension/ReciboDefTypeExtension.java" />
+		<include name="extension/ReciboDefTypeExtensionHandler.java" />
 		<include name="extension/GetTokenDocumentExtension.java" />
 		<include name="extension/GetTokenDocumentExtensionHandler.java" />
 	</javac>
@@ -399,7 +407,10 @@
 		<fileset dir="${schemas.dir}">
 			<include name="DTE_v10.xsd" />
 			<include name="EnvioDTE_v10.xsd" />
+			<include name="EnvioRecibos_v10.xsd" />
+			<include name="Recibos_v10.xsd" />
 			<include name="RespSII_v10.xsd" />
+			<include name="RespSIILibros_v10.xsd" />
 			<include name="RespuestaEnvioDTE_v10.xsd" />
 			<include name="IntroducedByNIC-Semilla.xsd" />
 			<include name="IntroducedByNIC-SemillaRequest.xsd" />
@@ -409,6 +420,9 @@
 			<include name="DTE_v10.xsdconfig" />
 			<include name="EnvioDTE_v10.xsdconfig" />
 			<include name="RespSII_v10.xsdconfig" />
+			<include name="RespSIILibros_v10.xsdconfig" />
+			<include name="EnvioRecibos_v10.xsdconfig" />
+			<include name="Recibos_v10.xsdconfig" />
 			<include name="RespuestaEnvioDTE.xsdconfig" />
 			<include name="IntroducedByNIC-Semilla.xsdconfig" />
 		</fileset>
