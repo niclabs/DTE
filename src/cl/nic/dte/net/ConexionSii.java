@@ -45,6 +45,7 @@ import javax.xml.soap.SOAPPart;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
@@ -138,6 +139,8 @@ public class ConexionSii {
 		message.getMimeHeaders().addHeader("SOAPAction", "");
 
 		URL endpoint = new URL(urlSolicitud);
+		
+		message.writeTo(System.out);
 
 		SOAPMessage responseSII = con.call(message, endpoint);
 
@@ -228,23 +231,60 @@ public class ConexionSii {
 		}
 	}
 
+	/**
+	 * Consulta el estado de un DTE en el ambiente de produccion del SII
+	 * 
+	 * @param rutConsultante
+	 * @param dte
+	 * @param token
+	 * @return
+	 * @throws UnsupportedOperationException
+	 * @throws SOAPException
+	 * @throws MalformedURLException
+	 * @throws XmlException
+	 */
+	public RESPUESTADocument getEstadoDTEProduccion(String rutConsultante,
+			Documento dte, String token) throws UnsupportedOperationException,
+			SOAPException, MalformedURLException, XmlException {
+		String urlSolicitud = Utilities.netLabels
+				.getString("URL_CONSULTA_ESTADO_DTE_PRODUCCION");
+		return getEstadoDTE(rutConsultante, dte, token, urlSolicitud);
+	}
+	
+	/**
+	 * Consulta el estado de un DTE en el ambiente de del SII
+	 * 
+	 * @param rutConsultante
+	 * @param dte
+	 * @param token
+	 * @return
+	 * @throws UnsupportedOperationException
+	 * @throws SOAPException
+	 * @throws MalformedURLException
+	 * @throws XmlException
+	 */
+	public RESPUESTADocument getEstadoDTECertificacion(String rutConsultante,
+			Documento dte, String token) throws UnsupportedOperationException,
+			SOAPException, MalformedURLException, XmlException {
+		String urlSolicitud = Utilities.netLabels
+				.getString("URL_CONSULTA_ESTADO_DTE_CERTIFICACION");
+		return getEstadoDTE(rutConsultante, dte, token, urlSolicitud);
+	}
+
 	@SuppressWarnings("unchecked")
-	public RESPUESTADocument getEstadoDTE(String rutConsultante,Documento dte, String token)
+	private RESPUESTADocument getEstadoDTE(String rutConsultante, Documento dte,
+			String token, String urlSolicitud)
 			throws UnsupportedOperationException, SOAPException,
 			MalformedURLException, XmlException {
 
-		
 		String rutEmisor = dte.getEncabezado().getEmisor().getRUTEmisor();
 		String rutReceptor = dte.getEncabezado().getReceptor().getRUTRecep();
-		Integer tipoDTE = dte.getEncabezado().getIdDoc().getTipoDTE().intValue();
+		Integer tipoDTE = dte.getEncabezado().getIdDoc().getTipoDTE()
+				.intValue();
 		long folioDTE = dte.getEncabezado().getIdDoc().getFolio();
-		String fechaEmision = Utilities.fechaEstadoDte
-		.format(dte.getEncabezado().getIdDoc().getFchEmis().getTime());
+		String fechaEmision = Utilities.fechaEstadoDte.format(dte
+				.getEncabezado().getIdDoc().getFchEmis().getTime());
 		long montoTotal = dte.getEncabezado().getTotales().getMntTotal();
-		
-
-		String urlSolicitud = Utilities.netLabels
-				.getString("URL_CONSULTA_ESTADO_DTE");
 
 		SOAPConnectionFactory scFactory = SOAPConnectionFactory.newInstance();
 		SOAPConnection con = scFactory.createConnection();
@@ -317,7 +357,6 @@ public class ConexionSii {
 		SOAPPart sp = responseSII.getSOAPPart();
 		SOAPBody b = sp.getEnvelope().getBody();
 
-
 		for (Iterator<SOAPBodyElement> res = b.getChildElements(sp
 				.getEnvelope().createName("getEstDteResponse", "ns1",
 						urlSolicitud)); res.hasNext();) {
@@ -339,14 +378,60 @@ public class ConexionSii {
 
 	}
 
-	public RECEPCIONDTEDocument uploadEnvio(String rutEnvia,
+	/**
+	 * Envia el archivo XML indicado al ambiente de produccion del SII.
+	 * 
+	 * @param rutEnvia
+	 * @param rutCompania
+	 * @param archivoEnviarSII
+	 * @param token
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws XmlException
+	 */
+	public RECEPCIONDTEDocument uploadEnvioProduccion(String rutEnvia,
 			String rutCompania, File archivoEnviarSII, String token)
-			throws ClientProtocolException, IOException,
-			org.apache.http.ParseException, XmlException {
-
-		String urlEnvio = Utilities.netLabels.getString("UPLOAD_URL_ENVIO_SII");
+			throws ClientProtocolException, ParseException, IOException,
+			XmlException {
+		String urlEnvio = Utilities.netLabels
+				.getString("URL_UPLOAD_PRODUCCION");
 		String hostEnvio = Utilities.netLabels
-				.getString("UPLOAD_HOST_ENVIO_SII");
+				.getString("HOST_UPLOAD_PRODUCCION");
+		return uploadEnvio(rutEnvia, rutCompania, archivoEnviarSII, token,
+				urlEnvio, hostEnvio);
+	}
+
+	/**
+	 * Envia el archivo XML indicado al ambiente de certificacion del SII.
+	 * 
+	 * @param rutEnvia
+	 * @param rutCompania
+	 * @param archivoEnviarSII
+	 * @param token
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws XmlException
+	 */
+	public RECEPCIONDTEDocument uploadEnvioCertificacion(String rutEnvia,
+			String rutCompania, File archivoEnviarSII, String token)
+			throws ClientProtocolException, ParseException, IOException,
+			XmlException {
+		String urlEnvio = Utilities.netLabels
+				.getString("URL_UPLOAD_CERTIFICACION");
+		String hostEnvio = Utilities.netLabels
+				.getString("HOST_UPLOAD_CERTIFICACION");
+		return uploadEnvio(rutEnvia, rutCompania, archivoEnviarSII, token,
+				urlEnvio, hostEnvio);
+	}
+
+	private RECEPCIONDTEDocument uploadEnvio(String rutEnvia,
+			String rutCompania, File archivoEnviarSII, String token,
+			String urlEnvio, String hostEnvio) throws ClientProtocolException,
+			IOException, org.apache.http.ParseException, XmlException {
 
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(urlEnvio);

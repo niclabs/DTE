@@ -98,7 +98,7 @@ public class VerificaEstadoEnSII {
 
 		String enviadorS = Utilities.getRutFromCertificate(x509);
 		
-		RESPUESTADocument resp = con.getEstadoDTE(enviadorS, doc.getDTE()
+		RESPUESTADocument resp = con.getEstadoDTECertificacion(enviadorS, doc.getDTE()
 				.getDocumento(), token);
 		opts.setSavePrettyPrintIndent(2);
 		opts.setSavePrettyPrint();

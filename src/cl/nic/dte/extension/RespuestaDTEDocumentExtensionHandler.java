@@ -78,7 +78,7 @@ public class RespuestaDTEDocumentExtensionHandler {
 		dte.getRespuestaDTE().getResultado().getCaratula().xsetTmstFirmaResp(
 				XmlDateTime.Factory.newValue(Utilities.fechaHoraFormat
 						.format(new Date())));
-		XMLUtil.signEmbeded(dte.getDomNode(), uri, pKey, cert);
+		XMLUtil.signEmbeded(dte.getRespuestaDTE().getDomNode(), uri, pKey, cert);
 
 		XmlOptions opts = new XmlOptions();
 		opts.setCharacterEncoding("ISO-8859-1");

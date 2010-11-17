@@ -85,10 +85,10 @@ public class ReciboDefTypeExtensionHandler {
 		dte.getDocumentoRecibo().xsetTmstFirmaRecibo(
 				FechaHoraType.Factory.newValue(Utilities.fechaHoraFormat
 						.format(new Date())));
-		XMLUtil.signEmbeded(dte.getDocumentoRecibo().getDomNode(), uri, pKey, cert);
-
+		XMLUtil.signEmbededApache(dte.getDomNode().getOwnerDocument(), uri, pKey, cert);
+		
 		XmlOptions opts = new XmlOptions();
-		opts.setCharacterEncoding("ISO-8859-1");
+		opts.setCharacterEncoding("ISO-8859-1");		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		dte.save(out, opts);
 

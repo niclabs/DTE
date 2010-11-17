@@ -92,7 +92,7 @@ public class EnviaDocumento {
 		
 		String enviadorS = Utilities.getRutFromCertificate(x509);
 
-		RECEPCIONDTEDocument recp = con.uploadEnvio(enviadorS, compaS,
+		RECEPCIONDTEDocument recp = con.uploadEnvioCertificacion(enviadorS, compaS,
 				new File(otherArgs[0]), token);
 
 		System.out.println(recp.xmlText());

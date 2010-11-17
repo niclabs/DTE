@@ -107,7 +107,7 @@ public class GeneraFacturaCompleta {
 
 		iddoc.setMedioPago(MedioPagoType.Enum.forString("LT"));
 		iddoc.setFmaPago(BigInteger.valueOf(2));
-
+		
 		// Receptor
 		Receptor recp = doc.getDTE().getDocumento().getEncabezado()
 				.addNewReceptor();

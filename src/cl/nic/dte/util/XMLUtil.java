@@ -70,13 +70,13 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.commons.ssl.Base64;
 import org.apache.xml.security.exceptions.XMLSecurityException;
-import org.apache.xml.security.signature.ObjectContainer;
 import org.apache.xml.security.transforms.Transforms;
 import org.apache.xmlbeans.XmlError;
+import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlObject;
+import org.apache.xmlbeans.XmlOptionCharEscapeMap;
 import org.apache.xmlbeans.XmlOptions;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import cl.nic.dte.VerifyResult;
@@ -570,15 +570,23 @@ public class XMLUtil {
 		try {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 
+			XmlOptionCharEscapeMap escapes = new XmlOptionCharEscapeMap();
+		    escapes.addMapping('\'', XmlOptionCharEscapeMap.PREDEF_ENTITY);
+		    escapes.addMapping('&', XmlOptionCharEscapeMap.PREDEF_ENTITY);
+			
+			
 			XmlOptions opts = new XmlOptions();
 			HashMap<String, String> namespaces = new HashMap<String, String>();
 			namespaces.put("", "http://www.sii.cl/SiiDte");
 			opts.setCharacterEncoding("ISO-8859-1");
 			opts.setSaveImplicitNamespaces(namespaces);
 			opts.setSaveOuter();
-			// opts.setSavePrettyPrint();
+			opts.setSavePrettyPrint();
 			opts.setSavePrettyPrintIndent(0);
 			opts.setSaveNoXmlDecl();
+			
+			opts.setSaveSubstituteCharacters(escapes);
+			
 			xml.save(out, opts);
 
 			return out.toString("ISO-8859-1").replaceAll("\n", "").getBytes("ISO-8859-1");
@@ -589,6 +597,9 @@ public class XMLUtil {
 			return null;
 		} catch (IOException e) {
 			// Nunca debe invocarse
+			e.printStackTrace();
+			return null;
+		} catch (XmlException e) {
 			e.printStackTrace();
 			return null;
 		}

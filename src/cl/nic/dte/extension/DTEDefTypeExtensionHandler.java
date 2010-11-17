@@ -584,7 +584,7 @@ public class DTEDefTypeExtensionHandler {
 
 		sig.initSign(pKey);
 
-		sig.update(XMLUtil.getCleaned(data));
+		sig.update(XMLUtil.getCleaned(data));	
 		
 		// sig.update(XMLUtil.getBytesXML(data));
 		
