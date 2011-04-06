@@ -23,6 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.XMLSignatureException;
@@ -85,10 +86,15 @@ public class ReciboDefTypeExtensionHandler {
 		dte.getDocumentoRecibo().xsetTmstFirmaRecibo(
 				FechaHoraType.Factory.newValue(Utilities.fechaHoraFormat
 						.format(new Date())));
+		HashMap<String, String> namespaces = new HashMap<String, String>();
+		namespaces.put("", "http://www.sii.cl/SiiDte");
+		
 		XMLUtil.signEmbededApache(dte.getDomNode().getOwnerDocument(), uri, pKey, cert);
 		
 		XmlOptions opts = new XmlOptions();
-		opts.setCharacterEncoding("ISO-8859-1");		
+		opts.setCharacterEncoding("ISO-8859-1");
+		opts.setSaveImplicitNamespaces(namespaces);
+
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		dte.save(out, opts);
 

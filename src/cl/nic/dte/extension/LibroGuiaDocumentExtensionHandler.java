@@ -161,7 +161,7 @@ public class LibroGuiaDocumentExtensionHandler {
 		opts.setCharacterEncoding("ISO-8859-1");
 		// Debido a que SII define Signature en una estructura interna, estoy
 		// obligado a cambiar el namespace
-		opts.setLoadSubstituteNamespaces(namespaces);
+		//opts.setLoadSubstituteNamespaces(namespaces);
 
 		dte.set(LibroGuiaDocument.Factory.parse(dte.newInputStream(), opts));
 

@@ -139,7 +139,7 @@ public class ConexionSii {
 		message.getMimeHeaders().addHeader("SOAPAction", "");
 
 		URL endpoint = new URL(urlSolicitud);
-		
+
 		message.writeTo(System.out);
 
 		SOAPMessage responseSII = con.call(message, endpoint);
@@ -250,7 +250,7 @@ public class ConexionSii {
 				.getString("URL_CONSULTA_ESTADO_DTE_PRODUCCION");
 		return getEstadoDTE(rutConsultante, dte, token, urlSolicitud);
 	}
-	
+
 	/**
 	 * Consulta el estado de un DTE en el ambiente de del SII
 	 * 
@@ -272,8 +272,8 @@ public class ConexionSii {
 	}
 
 	@SuppressWarnings("unchecked")
-	private RESPUESTADocument getEstadoDTE(String rutConsultante, Documento dte,
-			String token, String urlSolicitud)
+	private RESPUESTADocument getEstadoDTE(String rutConsultante,
+			Documento dte, String token, String urlSolicitud)
 			throws UnsupportedOperationException, SOAPException,
 			MalformedURLException, XmlException {
 

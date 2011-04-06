@@ -89,7 +89,7 @@ public class EnvioRecibosDocumentExtensionHandler {
 				FechaHoraType.Factory.newValue(Utilities.fechaHoraFormat
 						.format(new Date())));
 		XMLUtil
-				.signEmbeded(dte.getEnvioRecibos().getDomNode(), uri, pKey,
+				.signEmbededApache(dte.getEnvioRecibos().getDomNode().getOwnerDocument(), uri, pKey,
 						cert);
 
 		XmlOptions opts = new XmlOptions();

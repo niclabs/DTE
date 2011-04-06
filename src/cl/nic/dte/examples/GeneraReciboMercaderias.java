@@ -32,6 +32,7 @@ import javax.xml.namespace.QName;
 import org.apache.xmlbeans.XmlCursor;
 import org.apache.xmlbeans.XmlOptions;
 
+import cl.nic.dte.VerifyResult;
 import cl.sii.siiDte.EnvioRecibosDocument;
 import cl.sii.siiDte.ReciboDefType;
 import cl.sii.siiDte.ReciboDocument;
@@ -62,7 +63,7 @@ public class GeneraReciboMercaderias {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		dr.setFchEmis(cal);
-		dr.setDeclaracion("Texto declaracion");
+		dr.setDeclaracion("El acuse de recibo que se declara en este acto, de acuerdo a lo dispuesto en la letra b) del Art. 4, y la letra c) del Art. 5 de la Ley 19.983, acredita que la entrega de mercaderias o servicio(s) prestado(s) ha(n) sido recibido(s).");
 		dr.setFolio(12345);
 
 		dr.setID("RM-33-12345-60910000-1");
@@ -125,7 +126,7 @@ public class GeneraReciboMercaderias {
 		sr.setID("SRM-33-1234-60910000-1");
 
 		ReciboDefType[] recArray = new ReciboDefType[1];
-		recArray[0] = rec;
+		recArray[0] = recibo.getRecibo();//rec;
 		sr.setReciboArray(recArray);
 
 		er.setSetRecibos(sr);
@@ -156,6 +157,24 @@ public class GeneraReciboMercaderias {
 
 		erd.sign(key, cert);
 
+		// validar schema
+		
+		VerifyResult resl = erd.verifyXML();
+		if (!resl.isOk()) {
+			System.out.println("Documento: Estructura XML Incorrecta: "
+					+ resl.getMessage());
+		} else {
+			System.out.println("Documento: Estructura XML OK");
+		}
+		
+		
+		resl = erd.verifySignature();
+		if (!resl.isOk()) {
+			System.out.println("Documento: Firma Incorrecta: "
+					+ resl.getMessage());
+		} else {
+			System.out.println("Documento: Firma OK");
+		}
 		// almacenar
 		opts = new XmlOptions();
 		opts.setCharacterEncoding("ISO-8859-1");
