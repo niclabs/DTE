@@ -589,7 +589,7 @@ public class XMLUtil {
 			
 			xml.save(out, opts);
 
-			return out.toString("ISO-8859-1").replaceAll("\n", "").getBytes("ISO-8859-1");
+			return out.toString("ISO-8859-1").replaceAll("\n", "").replaceAll("\r", "").getBytes("ISO-8859-1");
 			// return out.toString("ISO-8859-1").getBytes("ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			// Nunca debe invocarse
